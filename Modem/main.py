@@ -1,5 +1,4 @@
 #Please bear with while I figure out how this shit works
-
 import kivy
 
 from kivy.app import App
