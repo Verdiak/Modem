@@ -1,6 +1,6 @@
 #:kivy 2.3.0
 
-<Modem>:
+<Home>:
     orientation: "vertical"
 
     TextInput:
@@ -12,12 +12,10 @@
         text: 'Done'
         on_release:
             data = userInput.text
-            root.saveData(data, gratitude)
+            root.saveData(data, 'gratitude')
 
     #when button pressed save input to file
     #return Label(text='read file')
-
-
 
 
 #search 
