@@ -1,18 +1,18 @@
 #:kivy 2.3.0
 
-<ModemScreen>:
+<Modem>:
     orientation: "vertical"
 
     TextInput:
         id: userInput
     Label:
-        id: labelText # This id isn't serving a purpose
+        id: labelText # This id isn't currently serving a purpose
         text: root.readData()
     Button:
         text: 'Done'
         on_release:
-            gratitude = userInput.text
-            root.saveData(gratitude, 1)
+            data = userInput.text
+            root.saveData(data, gratitude)
 
     #when button pressed save input to file
     #return Label(text='read file')
