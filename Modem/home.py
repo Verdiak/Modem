@@ -1,12 +1,13 @@
 from kivy.uix.boxlayout import BoxLayout
 import sqlite3
+from datetime import datetime
 
 #from log import Log for editing the mood and period straight from home 
 
 class Home(BoxLayout):
     def __init__(self):
         super(Home, self).__init__()  # Ensures kivy is set up before dealing with SQL
-        con = sqlite3.connect('test.db')
+        con = sqlite3.connect('modem.db')
         cursor = con.cursor()
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS userSaveData(
@@ -15,15 +16,33 @@ class Home(BoxLayout):
                 gratitude TEXT,
                 rant TEXT,
                 action TEXT,
-                period BOOL NOT NULL
+                period BOOL
             )
         ''')
         con.commit()
         con.close()
 
     def readData(self):
-        return 'temp test'
+        today = datetime.today().strftime('%Y-%m-%d')
+        con = sqlite3.connect('modem.db')
+        cursor = con.cursor()
+        cursor.execute('SELECT * FROM userSaveData WHERE date = ?', (today,))
+        result = str(cursor.fetchone())
+        con.close()
+        print(result)
+        return result
     
-    def saveData(self, data, dataType):
-        print(data)
-        # Write the text to a file
+    def saveData(self, data, attribute):
+        today = datetime.today().strftime('%Y-%m-%d')
+        con = sqlite3.connect('modem.db')
+        cursor = con.cursor()
+        cursor.execute("SELECT COUNT(*) FROM userSaveData WHERE date = ?", (today,))
+        exists = cursor.fetchone()[0]
+        if exists:            
+            query = f'UPDATE userSaveData SET {attribute} = ? WHERE date = ?'
+            cursor.execute(query, (data, today))
+        else:
+            query = f'INSERT INTO userSaveData (date, {attribute}) VALUES (?, ?)'
+            cursor.execute(query, (today, data))
+        con.commit()
+        con.close()
