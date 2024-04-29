@@ -5,22 +5,20 @@ from datetime import datetime
 #from log import Log for editing the mood and period straight from home 
 
 class Home(BoxLayout):
-    def __init__(self):
-        super(Home, self).__init__()  # Ensures kivy is set up before dealing with SQL
-        con = sqlite3.connect('modem.db')
-        cursor = con.cursor()
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS userSaveData(
-                date DATE PRIMARY KEY,
-                mood FLOAT,
-                gratitude TEXT,
-                rant TEXT,
-                action TEXT,
-                period BOOL
-            )
-        ''')
-        con.commit()
-        con.close()
+    con = sqlite3.connect('modem.db')
+    cursor = con.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS userSaveData(
+            date DATE PRIMARY KEY,
+            mood FLOAT,
+            gratitude TEXT,
+            rant TEXT,
+            action TEXT,
+            period BOOL
+        )
+    ''')
+    con.commit()
+    con.close()
 
     def readData(self):
         today = datetime.today().strftime('%Y-%m-%d')
