@@ -13,6 +13,9 @@
         on_release:
             data = userInput.text
             root.saveData(data, 'gratitude')
+    Button:
+        text: 'Export file'
+        on_press: root.exportFile()
 
     #when button pressed save input to file
     #return Label(text='read file')

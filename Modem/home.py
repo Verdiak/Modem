@@ -1,6 +1,7 @@
 from kivy.uix.boxlayout import BoxLayout
 import sqlite3
 from datetime import datetime
+import shutil
 
 #from log import Log for editing the mood and period straight from home 
 
@@ -21,10 +22,10 @@ class Home(BoxLayout):
     con.close()
 
     def readData(self):
-        today = datetime.today().strftime('%Y-%m-%d')
+        #today = datetime.today().strftime('%Y-%m-%d')
         con = sqlite3.connect('modem.db')
         cursor = con.cursor()
-        cursor.execute('SELECT * FROM userSaveData WHERE date = ?', (today,))
+        cursor.execute('SELECT * FROM userSaveData')
         result = str(cursor.fetchone())
         con.close()
         print(result)
@@ -44,3 +45,6 @@ class Home(BoxLayout):
             cursor.execute(query, (today, data))
         con.commit()
         con.close()
+
+    def exportFile(self):
+            shutil.copyfile('modem.db', '/storage/self/primary/Documents/modemExport.db')
