@@ -1,25 +1,151 @@
 #:kivy 2.3.0
 
 <Home>:
-    orientation: "vertical"
+    BoxLayout:
+        id: homeScreenContainer
+        orientation: 'vertical'
+        BoxLayout: # Top bar
+            canvas.before:
+                Color:
+                    rgba: 15/255, 15/255, 15/255, 1 
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(50)
+        
+            Button:
+                size_hint: None, None
+                size: dp(48), dp(48)
+                pos_hint: {'left': 0}
+                background_color: 0, 0, 0, 0
+                on_release:
+                    root.manager.current = 'log'
+                Image:
+                    source: 'Graphics/navStonks.png'
+                    size: self.parent.size
+                    center: self.parent.center
+        
+            Image:
+                source: 'Graphics/navLogo.png'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                height: dp(48)
+        
+            Button:
+                size_hint: None, None
+                size: dp(48), dp(48)
+                pos_hint: {'right': 1}
+                background_color: 0, 0, 0, 0
+                Image:
+                    source: 'Graphics/navSearch.png'
+                    size: self.parent.size
+                    center: self.parent.center
 
-    TextInput:
-        id: userInput
-    Label:
-        id: labelText # This id isn't currently serving a purpose
-        text: root.readData()
-    Button:
-        text: 'Done'
-        on_release:
-            data = userInput.text
-            root.saveData(data, 'gratitude')
-    Button:
+#This was going to be the home buttons but you probably won't need it anymore
+
+#        Button:
+ #           id: 
+#            #on_release: opens log for that date
+#
+#            #might have to add the white image
+#            background_color: (1, 0, 0, 1)
+#            BoxLayout:
+#                orientation: 'vertical'
+#                BoxLayout:
+#                    orientation: 'horizontal'
+#                    Image: root.getMood(root.getDateReal())
+#                    Label: root.getDateNeat()
+#
+#                Label:
+#                    font_name: 'Fonts/bold.ttf'
+#                    id: labelText # This id isn't currently serving a purpose
+#                    foreground_color: 1, 1, 1, 1
+
+            
+
+<Search>:
+    orientation: 'vertical'
+
+<Log>:
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout: # Top bar
+            canvas.before:
+                Color:
+                    rgba: 15/255, 15/255, 15/255, 1 
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(50)
+        
+            Button:
+                size_hint: None, None
+                size: dp(48), dp(48)
+                pos_hint: {'left': 0}
+                background_color: 0, 0, 0, 0
+                on_release:
+                    root.saveData(moodInput.value, gratitudeInput.text, rantInput.text, actionInput.text)
+                    root.manager.current = 'home'
+                Image:
+                    source: 'Graphics/navBack.png'
+                    size: self.parent.size
+                    center: self.parent.center
+        
+            Label:
+                id: dateLabel
+                text: root.date() if root.date is not None else "No date selected"
+                font_name: 'Fonts/bold.ttf'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                height: dp(48)
+        
+            Button:
+                #id: periodInput probably dont need this
+                source: 'Graphics/periodFalse.png' # Initialises it, test without this
+                size_hint: None, None
+                size: dp(48), dp(48)
+                pos_hint: {'right': 1}
+                background_color: 0, 0, 0, 0
+                Image:
+                    id: periodGraphic
+                    size: self.parent.size
+                    center: self.parent.center
+                on_release:
+                    #root.togglePeriod() #WHY DOES THIS NOT WORK
+                    #periodGraphic.source = 'Graphics/periodTrue.png' if root.getPeriod(root.date) == 1 else 'Graphics/periodFalse.png' #see if you can remove this
+
+        Slider:
+            id: moodInput
+            min: 0
+            max: 5
+            step: 0.1
+            on_value:
+                root.sliderImage()
+
+        TextInput:
+            id: gratitudeInput
+            font_name: 'Fonts/meduim.ttf'
+            background_color: (15/255, 15/255, 15/255, 1)
+            foreground_color: 1, 1, 1, 1
+
+        TextInput:
+            id: rantInput
+            font_name: 'Fonts/meduim.ttf'
+            background_color: (15/255, 15/255, 15/255, 1)
+            foreground_color: 1, 1, 1, 1
+
+        TextInput:
+            id: actionInput
+            font_name: 'Fonts/meduim.ttf'
+            background_color: (15/255, 15/255, 15/255, 1)
+            foreground_color: 1, 1, 1, 1
+
+
+<Stonks>:
+    orientation: 'vertical'
+
+    Button: #Export button
         text: 'Export file'
         on_press: root.exportFile()
-
-    #when button pressed save input to file
-    #return Label(text='read file')
-
-#<Search> 
-#<Log>
-#<Graphs>
