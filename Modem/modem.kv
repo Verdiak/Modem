@@ -96,25 +96,21 @@
         
             Label:
                 id: dateLabel
-                text: root.date() if root.date is not None else "No date selected"
                 font_name: 'Fonts/bold.ttf'
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
                 height: dp(48)
         
             Button:
-                #id: periodInput probably dont need this
-                source: 'Graphics/periodFalse.png' # Initialises it, test without this
                 size_hint: None, None
                 size: dp(48), dp(48)
                 pos_hint: {'right': 1}
                 background_color: 0, 0, 0, 0
+                on_release:
+                    root.togglePeriod()
                 Image:
                     id: periodGraphic
                     size: self.parent.size
                     center: self.parent.center
-                on_release:
-                    #root.togglePeriod() #WHY DOES THIS NOT WORK
-                    #periodGraphic.source = 'Graphics/periodTrue.png' if root.getPeriod(root.date) == 1 else 'Graphics/periodFalse.png' #see if you can remove this
 
         Slider:
             id: moodInput

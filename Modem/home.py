@@ -2,7 +2,7 @@ from kivy.uix.boxlayout import BoxLayout
 import sqlite3
 import shutil
 from kivy.uix.screenmanager import Screen
-from datetime import datetime
+from datetime import datetime, timedelta
 from kivy.app import App
 from kivy.uix.button import Button
 
@@ -21,17 +21,15 @@ class Home(Screen):
                 period INTEGER DEFAULT 0
             )
         ''')
-        cursor.execute("SELECT COUNT(*) FROM userSaveData WHERE date = ?", (datetime.today().strftime('%Y-%m-%d'),))
+        cursor.execute("SELECT COUNT(*) FROM userSaveData WHERE date = ?", (datetime.today().strftime('%d/%m/%Y'),))
         exists = cursor.fetchone()[0]
         if not exists:
-            cursor.execute('INSERT INTO userSaveData (date) VALUES (?)', (datetime.today().strftime('%Y-%m-%d'),))
+            cursor.execute('INSERT INTO userSaveData (date) VALUES (?)', (datetime.today().strftime('%d/%m/%Y'),))
         con.commit()
         con.close()
-        
         for button in self.buttonList: # Clears existing list
             self.ids.homeScreenContainer.remove_widget(button)
         self.buttonList.clear()
-        
         self.buildEntryButtons()
     
     def buildEntryButtons(self):
@@ -42,7 +40,16 @@ class Home(Screen):
         con.close()
         for line in data:
             date = line[0]
-            self.entryButton = Button(text=date, on_press=lambda instance, dateValue=date: self.pressEntryButton(dateValue))
+            # Neatening dates
+            if date == datetime.today().strftime('%d/%m/%Y'):
+                dateNeat = 'Today'
+            elif date == (datetime.today() - timedelta(days=1)).strftime('%d/%m/%Y'):
+                dateNeat = 'Yesterday'
+            else:
+                dateObj = datetime.strptime(date, '%d/%m/%Y')
+                dateNeat = dateObj.strftime('%d %b')
+            # Entry buttons
+            self.entryButton = Button(text = dateNeat, on_press = lambda instance, dateValue = date: self.pressEntryButton(dateValue))
             self.buttonList.append(self.entryButton)
             self.ids.homeScreenContainer.add_widget(self.entryButton)
 
