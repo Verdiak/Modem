@@ -5,6 +5,7 @@
         id: homeScreenContainer
         orientation: 'vertical'
         BoxLayout: # Top bar
+            padding: dp(10) 
             canvas.before:
                 Color:
                     rgba: 15/255, 15/255, 15/255, 1 
@@ -17,7 +18,7 @@
         
             Button:
                 size_hint: None, None
-                size: dp(48), dp(48)
+                size: dp(30), dp(30)
                 pos_hint: {'left': 0}
                 background_color: 0, 0, 0, 0
                 on_release:
@@ -29,12 +30,10 @@
         
             Image:
                 source: 'Graphics/navLogo.png'
-                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                height: dp(48)
-        
+
             Button:
                 size_hint: None, None
-                size: dp(48), dp(48)
+                size: dp(30), dp(30)
                 pos_hint: {'right': 1}
                 background_color: 0, 0, 0, 0
                 Image:
@@ -42,27 +41,14 @@
                     size: self.parent.size
                     center: self.parent.center
 
-#This was going to be the home buttons but you probably won't need it anymore
-
-#        Button:
- #           id: 
-#            #on_release: opens log for that date
-#
-#            #might have to add the white image
-#            background_color: (1, 0, 0, 1)
-#            BoxLayout:
-#                orientation: 'vertical'
-#                BoxLayout:
-#                    orientation: 'horizontal'
-#                    Image: root.getMood(root.getDateReal())
-#                    Label: root.getDateNeat()
-#
-#                Label:
-#                    font_name: 'Fonts/bold.ttf'
-#                    id: labelText # This id isn't currently serving a purpose
-#                    foreground_color: 1, 1, 1, 1
-
-            
+        ScrollView:
+            BoxLayout:
+                id: entryContainer
+                orientation: 'vertical'
+                size_hint_y: None # Idk what this does but it wont scroll without it
+                height: self.minimum_height # Same with this
+                spacing: dp(10)
+                padding: dp(10) 
 
 <Search>:
     orientation: 'vertical'
