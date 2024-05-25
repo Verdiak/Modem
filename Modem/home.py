@@ -7,6 +7,9 @@ from kivy.uix.label import Label
 from kivy.uix.image import Image
 from kivy.graphics import Color, RoundedRectangle
 
+import os
+from kivy.utils import platform
+
 class CustomButton(FloatLayout):
 
     def __init__(self, dateNeat, moodImage, gratitude, **kwargs):
@@ -57,7 +60,13 @@ class CustomButton(FloatLayout):
 class Home(Screen):
     buttonList = []
     def on_enter(self):
-        con = sqlite3.connect('modem.db')
+        if platform == 'android':
+            from android.storage import app_storage_path
+            dbPath = os.path.join(app_storage_path(), 'modem.db')
+        else:
+            dbPath = 'modem.db'
+
+        con = sqlite3.connect(dbPath)
         cursor = con.cursor()
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS userSaveData(
