@@ -1,4 +1,3 @@
-from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 import sqlite3
 from kivy.uix.screenmanager import Screen

@@ -1,7 +1,6 @@
 from kivy.uix.boxlayout import BoxLayout
 import sqlite3
 from datetime import datetime, timedelta
-import shutil
 from kivy.uix.screenmanager import Screen
 from kivy.properties import BooleanProperty
 
