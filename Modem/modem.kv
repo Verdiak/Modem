@@ -4,11 +4,18 @@
     BoxLayout:
         id: homeScreenContainer
         orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: 0.02, 0.02, 0.02, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
         BoxLayout: # Top bar
             padding: dp(10) 
             canvas.before:
                 Color:
-                    rgba: 15/255, 15/255, 15/255, 1 
+                    rgba: 0.02, 0.02, 0.02, 1
                 Rectangle:
                     pos: self.pos
                     size: self.size
@@ -47,8 +54,8 @@
                 orientation: 'vertical'
                 size_hint_y: None # Idk what this does but it wont scroll without it
                 height: self.minimum_height # Same with this
-                spacing: dp(10)
-                padding: dp(10) 
+                spacing: 10
+                padding: 10
 
 <Search>:
     orientation: 'vertical'
@@ -59,7 +66,7 @@
         BoxLayout: # Top bar
             canvas.before:
                 Color:
-                    rgba: 15/255, 15/255, 15/255, 1 
+                    rgba: 0.02, 0.02, 0.02, 1
                 Rectangle:
                     pos: self.pos
                     size: self.size
@@ -108,19 +115,19 @@
 
         TextInput:
             id: gratitudeInput
-            font_name: 'Fonts/meduim.ttf'
+            font_name: 'Fonts/medium.ttf'
             background_color: (15/255, 15/255, 15/255, 1)
             foreground_color: 1, 1, 1, 1
 
         TextInput:
             id: rantInput
-            font_name: 'Fonts/meduim.ttf'
+            font_name: 'Fonts/medium.ttf'
             background_color: (15/255, 15/255, 15/255, 1)
             foreground_color: 1, 1, 1, 1
 
         TextInput:
             id: actionInput
-            font_name: 'Fonts/meduim.ttf'
+            font_name: 'Fonts/medium.ttf'
             background_color: (15/255, 15/255, 15/255, 1)
             foreground_color: 1, 1, 1, 1
 

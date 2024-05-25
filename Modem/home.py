@@ -1,11 +1,59 @@
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 import sqlite3
-import shutil
 from kivy.uix.screenmanager import Screen
 from datetime import datetime, timedelta
-from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+from kivy.uix.image import Image
+from kivy.graphics import Color, RoundedRectangle
+
+class CustomButton(FloatLayout):
+
+    def __init__(self, dateNeat, moodImage, gratitude, **kwargs):
+        super(CustomButton, self).__init__(**kwargs)
+
+        with self.canvas.before:
+            Color(0.082, 0.082, 0.082, 1)
+            self.background = RoundedRectangle(radius=[(10, 10)] * 4)
+
+        self.entryMoodImage = Image(source = moodImage, width = 20, height = 20, size_hint = (None, None))
+        self.entryDate = Label(text=dateNeat,  font_name = 'Fonts/medium.ttf', size_hint=(None, None), valign = 'top')
+        self.entryGratitude = Label(text=gratitude,  font_name = 'Fonts/medium.ttf', size_hint=(None, None), valign = 'top')
+        self.entryButtonness = Button(background_normal='', background_color=(0, 0, 0, 0))
+        
+        self.add_widget(self.entryMoodImage)
+        self.add_widget(self.entryDate)
+        self.add_widget(self.entryGratitude)
+        self.add_widget(self.entryButtonness)
+
+        self.entryGratitude.bind(texture_size=self.centerWidgets)
+        self.bind(size=self.centerWidgets)
+
+        self.centerWidgets()
+
+
+
+    def centerWidgets(self, *args): # I'm sorry
+       padding = 10
+       
+       self.size = self.size[0], self.entryGratitude.texture_size[1] + self.entryMoodImage.height + padding*3
+
+       self.background.size = self.size
+       self.background.pos = self.pos
+       
+       self.entryMoodImage.pos = self.pos[0] + padding, self.pos[1] + self.height - self.entryMoodImage.height - padding
+       
+       self.entryDate.size = self.size[0] - (padding*2), self.entryDate.texture_size[1]
+       self.entryDate.text_size = self.entryDate.width, None
+       self.entryDate.pos = self.entryMoodImage.pos[0] + self.entryMoodImage.width + padding, self.pos[1] + self.height - (self.entryDate.height+self.entryMoodImage.height)/2 - padding
+       
+       self.entryGratitude.size = self.size[0] - (padding*2), self.entryGratitude.texture_size[1]
+       self.entryGratitude.text_size = self.entryGratitude.width, None
+       self.entryGratitude.pos = self.pos[0] + padding, self.pos[1] + self.height - self.entryGratitude.height - self.entryMoodImage.height - padding*2
+       
+       self.entryButtonness.pos = self.pos
+       self.entryButtonness.size = self.size
 
 class Home(Screen):
     buttonList = []
@@ -51,55 +99,27 @@ class Home(Screen):
             else:
                 dateObj = datetime.strptime(date, '%d/%m/%Y')
                 dateNeat = dateObj.strftime('%d %b')
-                
+            # Getting mood
             mood = line[1]
             if mood < 1:
-               moodImage = 'Graphics/0.5'
+               moodImage = 'Graphics/0.5.png'
             elif mood < 2:
-               moodImage = 'Graphics/1.5'
+               moodImage = 'Graphics/1.5.png'
             elif mood < 3:
-               moodImage = 'Graphics/2.5'
+               moodImage = 'Graphics/2.5.png'
             elif mood < 4:
-               moodImage = 'Graphics/3.5'
+               moodImage = 'Graphics/3.5.png'
             else:
-               moodImage = 'Graphics/4.5'
-               
+               moodImage = 'Graphics/4.5.png'
+            # Getting gratitude 
             gratitude = line[2]
             
-            # Entry buttons
-            self.entryButton = Button(
-                text = dateNeat,
-                on_press = lambda instance,
-                dateValue = date: self.pressEntryButton(dateValue),
-                size_hint_y=None,
-                #height = 75 #this is the one that you wanna change
-                )
+            # Entry buttons                     
+            self.entryButton = CustomButton(dateNeat, moodImage, gratitude, size_hint_y=None)
+            self.entryButton.entryButtonness.bind(on_press = lambda instance, dateValue=date: self.pressEntryButton(dateValue))
+           
 
-            #big button
-                #add a box layout verical
-                    #add a box layout horizontal to vertical set the height to something static
-                        #put image in horiz set width 
-                        #put date in horiz
-                    #add gratit to vertical the height should be variable
             
-            ''' 
-            entry_layout = BoxLayout(orientation='vertical')
-            mood_label = Label(text=f"Mood: {mood}")
-            date_label = Label(text=f"Date: {dateNeat}")
-            gratitude_label = Label(text=gratitude)
-
-            entry_layout.add_widget(mood_label)
-            entry_layout.add_widget(date_label)
-            entry_layout.add_widget(gratitude_label)
-
-            self.entryButton = Button(
-                size_hint_y=None,
-                height=entry_layout.minimum_height,
-                on_press=lambda instance, dateValue=date: self.pressEntryButton(dateValue)
-            )
-            
-            self.entryButton.add_widget(entry_layout)
-            '''
             self.buttonList.append(self.entryButton)
             self.ids.entryContainer.add_widget(self.entryButton)
             
