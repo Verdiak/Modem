@@ -4,7 +4,7 @@ kivy.require('2.3.0')
 
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, NoTransition
-import home, log
+import home, log, stonks
 
 class MyScreenManager(ScreenManager):
     def switch_screen(self, screen_name):
@@ -13,8 +13,9 @@ class MyScreenManager(ScreenManager):
 class ModemApp(App):
     def build(self):
         sm =  MyScreenManager(transition = NoTransition())
-        sm.add_widget(home.Home(name="home"))
-        sm.add_widget(log.Log(name="log"))
+        sm.add_widget(home.Home(name = 'home'))
+        sm.add_widget(log.Log(name = 'log'))
+        sm.add_widget(stonks.Stonks(name = 'stonks'))
         return sm
 
 if __name__ == '__main__':

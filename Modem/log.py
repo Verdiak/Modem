@@ -36,7 +36,7 @@ class Log(Screen):
             self.ids.periodGraphic.source = 'Graphics/periodFalse.png'
     
     def sliderImage(self):
-        print("HIT")
+        pass
         
     def getData(self):
         con = sqlite3.connect('modem.db')
@@ -73,20 +73,28 @@ class Log(Screen):
 def getSuggestions(text):
     when bulb pressed
 
-    sadKeywords = ['sad','groggy','bored','depressed']
+    boredKeywords = ['groggy', 'bored', 'eh']
+    sadKeywords = ['sad', 'depressed']
     angryKeywords = ['angry','annoyed','irritable']
     selfConciousKeywords = ['conscious','body','face','weight','fat','eating','ate','food','ugly']
-    conflictKeywords = ['told','said','hurt','fought','think','want']
+    conflictKeywords = ['told', 'said', 'hurt', 'fought', 'think', 'argu']
     lonelyKeywords = ['lonely','alone','friends']
 
-    sadSuggestions = ['Clean','Listen to music','Pick the easiest thing on your to do list and tick it off','Go for a walk','Shower']
-    angrySuggestions = ['You could just be hungry','Punch a pillow','Go somewhere you can scream', 'Listen to really loud music']
-    selfConciousSuggestions = ['Go for a run','Do a workout','Plan healthy meals for the rest of the day','Wear something comfortable']
-    conflictSuggestions = ['Give them space','Try to see it from their perspective','Talk to them']
-    lonelySuggestions = []
+    boredSuggestions = ['Clean', 'Pick the easiest thing on your to do list and tick it off', 'Go for a walk', 'Bake']
+    sadSuggestions = ['Cry it out', 'Listen to gentle music', 'Have a full shower']
+    angrySuggestions = ['You could just be hungry', 'Punch a pillow', 'Go somewhere you can scream', 'Listen to really loud music']
+    selfConciousSuggestions = ['Do a workout', 'Plan healthy meals for the rest of the day', 'Wear something comfortable']
+    conflictSuggestions = ['How long do your conflicts normally last?\nTime will heal this', 'Give them space', 'Try to see it from their perspective', 'Let them know how you feel']
+    lonelySuggestions = ['Message a group chat', 'Call a friend or family member']
 
     relevantSuggestions = []
 
+    for keyword in boredKeywords:
+        print(keyword)
+        if keyword in rant.lower():
+            relevantSuggestions += sadSuggestions
+        break
+    
     for keyword in sadKeywords:
         print(keyword)
         if keyword in rant.lower():

@@ -6,9 +6,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.image import Image
 from kivy.graphics import Color, RoundedRectangle
-
-import os
-from kivy.utils import platform
+from kivy.metrics import dp
 
 class CustomButton(FloatLayout):
 
@@ -16,12 +14,12 @@ class CustomButton(FloatLayout):
         super(CustomButton, self).__init__(**kwargs)
 
         with self.canvas.before:
-            Color(0.082, 0.082, 0.082, 1)
-            self.background = RoundedRectangle(radius=[(10, 10)] * 4)
+            Color(0.149, 0.125, 0.114, 1)
+            self.background = RoundedRectangle(radius=[dp(10)])
 
-        self.entryMoodImage = Image(source = moodImage, width = 20, height = 20, size_hint = (None, None))
-        self.entryDate = Label(text=dateNeat,  font_name = 'Fonts/medium.ttf', size_hint=(None, None), valign = 'top')
-        self.entryGratitude = Label(text=gratitude,  font_name = 'Fonts/medium.ttf', size_hint=(None, None), valign = 'top')
+        self.entryMoodImage = Image(source = moodImage, width = dp(20), height = dp(20), size_hint = (None, None))
+        self.entryDate = Label(text=dateNeat, font_name = 'Fonts/bold.ttf', font_size = 18, size_hint=(None, None), valign = 'top')
+        self.entryGratitude = Label(text=gratitude, font_name = 'Fonts/medium.ttf', font_size = 16, size_hint=(None, None), valign = 'top')
         self.entryButtonness = Button(background_normal='', background_color=(0, 0, 0, 0))
         
         self.add_widget(self.entryMoodImage)
@@ -34,10 +32,8 @@ class CustomButton(FloatLayout):
 
         self.centerWidgets()
 
-
-
     def centerWidgets(self, *args): # I'm sorry
-       padding = 10
+       padding = dp(10)
        
        self.size = self.size[0], self.entryGratitude.texture_size[1] + self.entryMoodImage.height + padding*3
 
@@ -60,13 +56,8 @@ class CustomButton(FloatLayout):
 class Home(Screen):
     buttonList = []
     def on_enter(self):
-        if platform == 'android':
-            from android.storage import app_storage_path
-            dbPath = os.path.join(app_storage_path(), 'modem.db')
-        else:
-            dbPath = 'modem.db'
-
-        con = sqlite3.connect(dbPath)
+        
+        con = sqlite3.connect('modem.db')
         cursor = con.cursor()
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS userSaveData(
