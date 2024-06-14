@@ -14,7 +14,7 @@ class CustomButton(FloatLayout):
         super(CustomButton, self).__init__(**kwargs)
 
         with self.canvas.before:
-            Color(0.149, 0.125, 0.114, 1)
+            Color(0.145, 0.125, 0.11, 1)
             self.background = RoundedRectangle(radius=[dp(10)])
 
         self.entryMoodImage = Image(source = moodImage, width = dp(20), height = dp(20), size_hint = (None, None))

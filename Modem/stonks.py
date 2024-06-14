@@ -6,7 +6,7 @@ class Stonks(Screen):
     def on_enter(self):
         self.warning = False
         self.ids.importButton.text = 'Import file'
-        self.ids.importButton.buttonColor = 0.149, 0.125, 0.114, 1
+        self.ids.importButton.buttonColor = 0.145, 0.125, 0.11, 1
         
 # Export and Import
 # You should let them choose where from 
@@ -19,7 +19,7 @@ class Stonks(Screen):
         else:
             self.importFile()
             self.ids.importButton.text = 'Import file'
-            self.ids.importButton.buttonColor = 0.149, 0.125, 0.114, 1
+            self.ids.importButton.buttonColor = 0.145, 0.125, 0.11, 1
             self.warning = False
 
     def exportFile(self):
