@@ -1,6 +1,10 @@
 from kivy.uix.screenmanager import Screen
 import shutil
 import sqlite3
+try:
+    from android.permissions import request_permissions, Permission
+except:
+    print('Couldnt import request_permissions')
 
 class Stonks(Screen):
     def on_enter(self):
@@ -24,12 +28,14 @@ class Stonks(Screen):
 
     def exportFile(self):
         try:
+            request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
             shutil.copyfile('modem.db', '/storage/self/primary/Documents/modemExport.db')
         except:
             print('Could not export file')
 
     def importFile(self):
         try:
+            request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
             shutil.move('/storage/self/primary/Documents/modemExport.db', 'modem.db')
         except:
             print('Could not import file')
