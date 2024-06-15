@@ -90,7 +90,7 @@
             Label:
                 id: dateLabel
                 font_name: 'Fonts/bold.ttf'
-                font_size: 35
+                font_size: 40
                 height: dp(50)
                 text: 'Stonks'
         
@@ -111,8 +111,8 @@
                 orientation: 'vertical'
                 size_hint_y: None # Idk what this does but it wont scroll without it
                 height: self.minimum_height # Same with this
-                spacing: 10
-                padding: 10
+                spacing: dp(10)
+                padding: dp(10)
 
                 Slider:
                     id: moodInput
@@ -131,6 +131,7 @@
                     padding: dp(10)
                     #add rounded corners
                     font_name: 'Fonts/medium.ttf'
+                    font_size: 20
                     background_color: 0.145, 0.125, 0.11, 1
                     foreground_color: 1, 1, 1, 1
 
@@ -141,6 +142,7 @@
                     height: (self.minimum_height)
                     padding: dp(10)
                     font_name: 'Fonts/medium.ttf'
+                    font_size: 20
                     background_color: 0.145, 0.125, 0.11, 1
                     foreground_color: 1, 1, 1, 1
 
@@ -151,6 +153,7 @@
                     height: (self.minimum_height)
                     padding: dp(10)
                     font_name: 'Fonts/medium.ttf'
+                    font_size: 20
                     background_color: 0.145, 0.125, 0.11, 1
                     foreground_color: 1, 1, 1, 1
 
@@ -184,7 +187,7 @@
         
             Label:
                 font_name: 'Fonts/bold.ttf'
-                font_size: 35
+                font_size: 40
                 height: dp(50)
                 text: 'Stonks'
 
@@ -199,8 +202,8 @@
                 orientation: 'vertical'
                 size_hint_y: None
                 height: self.minimum_height
-                spacing: 10
-                padding: 10
+                spacing: dp(10)
+                padding: dp(10)
 
                 Button: #Export button
                     canvas.before:
@@ -211,6 +214,7 @@
                             pos: self.pos
                             radius: [dp(10)]
                     font_name: 'Fonts/medium.ttf'
+                    font_size: 20
                     background_color: 0, 0, 0, 0
                     text: 'Export file'
                     on_press: root.exportFile()
@@ -227,6 +231,7 @@
                             pos: self.pos
                             radius: [dp(10)]
                     font_name: 'Fonts/medium.ttf'
+                    font_size: 20
                     background_color: 0, 0, 0, 0
                     buttonColor: 0.145, 0.125, 0.11, 1
                     size_hint_y: None

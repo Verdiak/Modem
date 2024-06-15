@@ -24,13 +24,13 @@ class Stonks(Screen):
 
     def exportFile(self):
         try:
-            shutil.copyfile('modem.db', '/storage/self/primary/Documents/modemExport.db')
+            shutil.copyfile('modem.db', 'content:///storage/self/primary/Documents/modemExport.db')
         except Exception as e:
             print(f'Could not export file: {e}')
 
     def importFile(self):
         try:
-            shutil.copyfile('/storage/self/primary/Documents/modemExport.db', 'modem.db')
+            shutil.copyfile('content:///storage/self/primary/Documents/modemExport.db', 'modem.db')
         except Exception as e:
             print(f'Could not import file: {e}')
     
