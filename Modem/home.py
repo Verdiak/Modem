@@ -17,9 +17,9 @@ class CustomButton(FloatLayout):
             Color(0.145, 0.125, 0.11, 1)
             self.background = RoundedRectangle(radius=[dp(10)])
 
-        self.entryMoodImage = Image(source = moodImage, width = dp(20), height = dp(20), size_hint = (None, None))
-        self.entryDate = Label(text=dateNeat, font_name = 'Fonts/bold.ttf', font_size = 18, size_hint=(None, None), valign = 'top')
-        self.entryGratitude = Label(text=gratitude, font_name = 'Fonts/medium.ttf', font_size = 16, size_hint=(None, None), valign = 'top')
+        self.entryMoodImage = Image(source = moodImage, width = dp(40), height = dp(40), size_hint = (None, None))
+        self.entryDate = Label(text=dateNeat, font_name = 'Fonts/bold.ttf', font_size = 22, size_hint=(None, None), valign = 'top')
+        self.entryGratitude = Label(text=gratitude, font_name = 'Fonts/medium.ttf', font_size = 20, size_hint=(None, None), valign = 'top')
         self.entryButtonness = Button(background_normal='', background_color=(0, 0, 0, 0))
         
         self.add_widget(self.entryMoodImage)
