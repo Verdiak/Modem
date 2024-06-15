@@ -4,7 +4,7 @@ import sqlite3
 
 try:
     from android.permissions import request_permissions, Permission
-    request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
+    request_permissions([Permission.READ_INTERNAL_STORAGE, Permission.WRITE_INTERNAL_STORAGE])
 except:
     print('Couldnt import request_permissions')
 
@@ -30,6 +30,8 @@ class Stonks(Screen):
 
     def exportFile(self):
         try:
+            #if it exists:
+                #remove it
             shutil.copyfile('modem.db', '/storage/self/primary/Documents/modemExport.db')
         except Exception as e:
             print(f'Could not export file: {e}')
